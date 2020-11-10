@@ -13,7 +13,9 @@ function PhotoCard(props) {
           <UserId>{userId}</UserId>
           <ButtonWrapper>
             <DeleteButton onClick={DeleteOne}>Delete</DeleteButton>
-            <ChangeButton onClick={togglingChange}>Change</ChangeButton>
+            <ChangeButton onClick={() => togglingChange(id, title)}>
+              Change
+            </ChangeButton>
           </ButtonWrapper>
         </UpperContents>
         <PhotoTitle>{title}</PhotoTitle>

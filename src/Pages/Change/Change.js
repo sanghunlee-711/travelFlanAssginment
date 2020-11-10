@@ -8,9 +8,9 @@ function Change(props) {
   const {
     changedTitle,
     changedId,
-    setChangedTitle,
-    setChangedId,
-    ChangeDetail,
+    changeId,
+    changeTitle,
+    cardModify,
     toggleChange,
     togglingChange,
   } = props;
@@ -18,10 +18,22 @@ function Change(props) {
     <ChangeContainer toggleChange={toggleChange}>
       <UploadWrapper>
         <InputWrapper>
-          <InputTitle type="text" placeholder=" Type Changed title" />
-          <InputTitle type="text" placeholder=" Type Changed Id" />
+          <InputTitle
+            type="text"
+            placeholder=" Type Changed title"
+            value={changedId}
+            onChange={changeId}
+          />
+          <InputTitle
+            type="text"
+            placeholder=" Type Changed Id"
+            value={changedTitle}
+            onChange={changeTitle}
+          />
         </InputWrapper>
-        <UploadButton>Change</UploadButton>
+        <UploadButton onClick={() => cardModify(changedId, changedTitle)}>
+          Change
+        </UploadButton>
         <QuitButton onClick={togglingChange}>Quit</QuitButton>
       </UploadWrapper>
     </ChangeContainer>

@@ -2,7 +2,6 @@ import React, { useMemo, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Button from "../../Components/Button/Button";
 import PhotoCard from "../../Components/PhotoCard/PhotoCard";
-import { useSelector, useDispatch } from "react-redux";
 import Upload from "../Upload/Upload";
 import Nav from "../../Components/Nav/Nav";
 import Login from "../Login/Login";
@@ -15,7 +14,7 @@ export default function Main() {
   const [toggleChange, setToggleChange] = useState(false);
   const [toggleUpload, setToggleUpload] = useState(false);
   const [newPostTitle, setNewPostTitle] = useState("");
-  const [changedId, setChangedId] = useState("");
+  const [changedId, setChangedId] = useState(1);
   const [changedTitle, setChangedTitle] = useState("");
 
   const handleChange = (e) => {
@@ -23,7 +22,12 @@ export default function Main() {
     console.log(newPostTitle);
   };
 
-  // const dispatch = useDispatch();
+  const changeTitle = (e) => {
+    setChangedTitle(e.target.value);
+  };
+  const changeId = (e) => {
+    setChangedId(e.target.value);
+  };
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums ") //url에 limit offset 관련 설정이 없는것으로 추측, [id,userid,title]
@@ -34,12 +38,25 @@ export default function Main() {
   const togglingUpload = () => {
     setToggleUpload(!toggleUpload);
   };
-  const togglingChange = () => {
+  const togglingChange = (id, title) => {
     setToggleChange(!toggleChange);
-    console.log(toggleChange);
+    setChangedId(id);
+    setChangedTitle(title);
   };
 
-  // const item = useSelector((store) => store.uploadReducer); // 가져오기
+  const cardModify = (getId, getTitle) => {
+    let ChangedCardData = data.map((el) =>
+      el.id === Number(getId)
+        ? {
+            ...el,
+            id: getId,
+            title: getTitle,
+          }
+        : el
+    );
+    setData(ChangedCardData);
+    console.log(data);
+  };
 
   const Pagination = () => {
     setPageCount(pageCount + 5);
@@ -108,11 +125,12 @@ export default function Main() {
       <Change
         changedId={changedId}
         changedTitle={changedTitle}
-        setChangedId={setChangedId}
-        setChangedTitle={setChangedTitle}
         ChangeDetail={ChangeDetail}
         toggleChange={toggleChange}
         togglingChange={togglingChange}
+        changeTitle={changeTitle}
+        changeId={changeId}
+        cardModify={cardModify}
       />
       {/* <Login /> */}
     </div>
