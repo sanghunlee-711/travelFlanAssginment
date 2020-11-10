@@ -1,41 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import { useSelector, useDispatch } from "react-redux";
-import { addOne } from "../../store/actions";
 
 function Upload(props) {
-  const item = useSelector((store) => store.uploadReducer); // 가져오기
-  const dispatch = useDispatch();
-
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const { toggleUpload, togglingUpload } = props;
-
-  useEffect(() => {
-    console.log(item);
-  }, []);
-
-  const handleChange = (e) => {
-    setNewPostTitle(e.target.value);
-    console.log(newPostTitle);
-  };
+  const {
+    toggleUpload,
+    togglingUpload,
+    newPostTitle,
+    handleChange,
+    uploadNewOne,
+  } = props;
 
   return (
     <UploadContainer toggleUpload={toggleUpload}>
       <UploadWrapper>
-        {item.length}
         <InputTitle
           type="text"
           placeholder=" Type new Post title"
           value={newPostTitle}
           onChange={handleChange}
         />
-        {/* 업로드하기  */}
-        <UploadButton
-          onClick={() => dispatch(addOne(newPostTitle), setNewPostTitle(""))}
-        >
-          Upload
-        </UploadButton>
+        <UploadButton onClick={uploadNewOne}>Upload</UploadButton>
         <QuitButton onClick={togglingUpload}>Quit</QuitButton>
       </UploadWrapper>
     </UploadContainer>

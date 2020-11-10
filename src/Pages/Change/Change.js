@@ -4,51 +4,53 @@ import { connect } from "react-redux";
 import { useSelector, useDispatch } from "react-redux";
 import { addOne } from "../../store/actions";
 
-function Upload(props) {
-  const item = useSelector((store) => store.uploadReducer); // 가져오기
-  const dispatch = useDispatch();
-
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const { toggleUpload, togglingUpload } = props;
-
-  useEffect(() => {
-    console.log(item);
-  }, []);
-
-  const handleChange = (e) => {
-    setNewPostTitle(e.target.value);
-    console.log(newPostTitle);
-  };
-
+function Change(props) {
+  const {
+    changedTitle,
+    changedId,
+    changeId,
+    changeTitle,
+    cardModify,
+    toggleChange,
+    togglingChange,
+  } = props;
   return (
-    <UploadContainer toggleUpload={toggleUpload}>
+    <ChangeContainer toggleChange={toggleChange}>
       <UploadWrapper>
-        {item.length}
-        <InputTitle
-          type="text"
-          placeholder=" Type new Post title"
-          value={newPostTitle}
-          onChange={handleChange}
-        />
-        {/* 변경하기  */}
-        <UploadButton onClick={() => dispatch(addOne(newPostTitle))}>
+        <InputWrapper>
+          <InputTitle
+            type="text"
+            placeholder=" Type Changed title"
+            value={changedId}
+            onChange={changeId}
+          />
+          <InputTitle
+            type="text"
+            placeholder=" Type Changed Id"
+            value={changedTitle}
+            onChange={changeTitle}
+          />
+        </InputWrapper>
+        <UploadButton onClick={() => cardModify(changedId, changedTitle)}>
           Change
         </UploadButton>
-        <QuitButton onClick={togglingUpload}>Quit</QuitButton>
+        <QuitButton onClick={togglingChange}>Quit</QuitButton>
       </UploadWrapper>
-    </UploadContainer>
+    </ChangeContainer>
   );
 }
 
-const UploadContainer = styled.section`
+const ChangeContainer = styled.section`
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(217, 188, 186, 0.25);
-  display: ${(props) => (props.toggleUpload ? "static" : "none")};
+  display: ${(props) => (props.toggleChange ? "static" : "none")};
 `;
+
+const InputWrapper = styled.div``;
 
 const QuitButton = styled.button`
   position: absolute;
@@ -86,4 +88,4 @@ const UploadWrapper = styled.div`
   border-radius: 0.5rem;
 `;
 
-export default Upload;
+export default Change;

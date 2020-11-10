@@ -5,20 +5,7 @@ import Upload from "../../Pages/Upload/Upload";
 
 import { Link } from "react-router-dom";
 
-function Nav() {
-  const [toggleLogin, setToggleLogin] = useState(false);
-  const [toggleUpload, setToggleUpload] = useState(false);
-
-  const togglingUpload = (e) => {
-    setToggleUpload(!toggleUpload);
-    console.log(toggleUpload);
-    // if (toggleUpload === true) {
-    //   window.addEventListener("DOMMouseScroll", e.preventDefault, false);
-    // } else {
-    //   window.removeEventListener("DOMMouseScroll", e.preventDefault, false);
-    // }
-  };
-
+function Nav({ togglingUpload }) {
   return (
     <NavContainer>
       <NavWrapper>
@@ -28,8 +15,6 @@ function Nav() {
           <UpLoadText onClick={togglingUpload}>Upload</UpLoadText>
         </div>
       </NavWrapper>
-      {/* <Login /> */}
-      <Upload toggleUpload={toggleUpload} togglingUpload={togglingUpload} />
     </NavContainer>
   );
 }
