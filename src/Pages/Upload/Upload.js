@@ -8,17 +8,22 @@ function Upload(props) {
   const item = useSelector((store) => store.uploadReducer); // 가져오기
   const dispatch = useDispatch();
 
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const { toggleUpload, togglingUpload } = props;
+  const {
+    toggleUpload,
+    togglingUpload,
+    newPostTitle,
+    setNewPostTitle,
+    handleChange,
+    uploadNewOne,
+    AfterType,
+  } = props;
 
-  useEffect(() => {
-    console.log(item);
-  }, []);
+  // const [newPostTitle, setNewPostTitle] = useState("");
 
-  const handleChange = (e) => {
-    setNewPostTitle(e.target.value);
-    console.log(newPostTitle);
-  };
+  // const handleChange = (e) => {
+  //   setNewPostTitle(e.target.value);
+  //   console.log(newPostTitle);
+  // };
 
   return (
     <UploadContainer toggleUpload={toggleUpload}>
@@ -30,12 +35,7 @@ function Upload(props) {
           value={newPostTitle}
           onChange={handleChange}
         />
-        {/* 업로드하기  */}
-        <UploadButton
-          onClick={() => dispatch(addOne(newPostTitle), setNewPostTitle(""))}
-        >
-          Upload
-        </UploadButton>
+        <UploadButton onClick={uploadNewOne}>Upload</UploadButton>
         <QuitButton onClick={togglingUpload}>Quit</QuitButton>
       </UploadWrapper>
     </UploadContainer>

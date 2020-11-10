@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 function PhotoCard(props) {
-  const { id, title, DeleteOne } = props;
+  const { id, title, DeleteOne, userId, togglingChange } = props;
 
   return (
     <PhotoCardContainer>
@@ -10,9 +10,10 @@ function PhotoCard(props) {
       <TextWrapper>
         <UpperContents>
           <PhotoId>{id}</PhotoId>
+          <UserId>{userId}</UserId>
           <ButtonWrapper>
             <DeleteButton onClick={DeleteOne}>Delete</DeleteButton>
-            <ChangeButton>Change</ChangeButton>
+            <ChangeButton onClick={togglingChange}>Change</ChangeButton>
           </ButtonWrapper>
         </UpperContents>
         <PhotoTitle>{title}</PhotoTitle>
@@ -62,6 +63,10 @@ const ButtonWrapper = styled.div`
 const PhotoId = styled.span`
   font-size: 22px;
   color: #000;
+`;
+
+const UserId = styled(PhotoId)`
+  margin-left: 10px;
 `;
 
 const PhotoTitle = styled.span`

@@ -13,3 +13,5 @@ export const deleteOne = (item) => {
     payload: item,
   };
 };
+
+export const SaveData = () => {};
