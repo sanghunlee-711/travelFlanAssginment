@@ -13,9 +13,10 @@ function Upload(props) {
   return (
     <UploadContainer toggleUpload={toggleUpload}>
       <UploadWrapper>
+        <UploadTitle>Upload</UploadTitle>
         <InputTitle
           type="text"
-          placeholder=" Type new Post title"
+          placeholder="Type new Post title"
           value={newPostTitle}
           onChange={handleChange}
         />
@@ -36,26 +37,42 @@ const UploadContainer = styled.section`
   display: ${(props) => (props.toggleUpload ? "static" : "none")};
 `;
 
+const UploadTitle = styled.span`
+  font-size: 24px;
+  line-height: 54px;
+`;
+
 const QuitButton = styled.button`
   position: absolute;
   right: 1em;
   top: 1em;
+  &:hover {
+    transition: all 0.5s ease-in-out;
+    color: red;
+  }
 `;
 
 const InputTitle = styled.input`
-  width: 60%;
-  height: 4vh;
+  height: 32px;
   border: 1px solid black;
-  border-radius: 0.5em;
+  border-radius: 10px;
+  width: 80%;
+  margin: 5px;
+  padding-left: 10px;
   font-size: 1rem;
 `;
 
 const UploadButton = styled.button`
-  margin-left: 10px;
   font-size: 1rem;
+  width: 80%;
+  height: 40px;
+  margin-bottom: 50px;
+  border: 1px solid black;
+  border-radius: 10px;
   &:hover {
     transition: all 0.5s ease-in-out;
-    color: red;
+    color: white;
+    background-color: black;
   }
 `;
 
@@ -67,7 +84,8 @@ const UploadWrapper = styled.div`
   width: 30vw;
   height: 30vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   border-radius: 0.5rem;
 `;
