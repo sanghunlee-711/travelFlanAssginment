@@ -16,6 +16,13 @@ export default function Main() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [changedId, setChangedId] = useState(1);
   const [changedTitle, setChangedTitle] = useState("");
+  const [changedUserId, setChangedUserId] = useState(1);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/albums ") //url에 limit offset 관련 설정이 없는것으로 추측, [id,userid,title]
+      .then((res) => res.json())
+      .then((res) => setData(res));
+  }, []);
 
   const handleChange = (e) => {
     setNewPostTitle(e.target.value);
@@ -28,34 +35,34 @@ export default function Main() {
   const changeId = (e) => {
     setChangedId(e.target.value);
   };
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/albums ") //url에 limit offset 관련 설정이 없는것으로 추측, [id,userid,title]
-      .then((res) => res.json())
-      .then((res) => setData(res));
-  }, []);
+  const changeUserId = (e) => {
+    setChangedUserId(e.target.value);
+  };
 
   const togglingUpload = () => {
     setToggleUpload(!toggleUpload);
   };
-  const togglingChange = (id, title) => {
+
+  const togglingChange = (id, title, userId) => {
     setToggleChange(!toggleChange);
     setChangedId(id);
     setChangedTitle(title);
+    setChangedUserId(userId);
   };
 
-  const cardModify = (getId, getTitle) => {
+  const cardModify = (getId, getTitle, getUserId) => {
     let ChangedCardData = data.map((el) =>
       el.id === Number(getId)
         ? {
             ...el,
-            id: getId,
+            userId: getUserId,
             title: getTitle,
           }
         : el
     );
     setData(ChangedCardData);
     console.log(data);
+    setToggleChange(!toggleChange);
   };
 
   const Pagination = () => {
@@ -125,12 +132,14 @@ export default function Main() {
       <Change
         changedId={changedId}
         changedTitle={changedTitle}
+        changedUserId={changedUserId}
         ChangeDetail={ChangeDetail}
         toggleChange={toggleChange}
         togglingChange={togglingChange}
         changeTitle={changeTitle}
         changeId={changeId}
         cardModify={cardModify}
+        changeUserId={changeUserId}
       />
       {/* <Login /> */}
     </div>

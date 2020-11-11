@@ -13,7 +13,7 @@ function PhotoCard(props) {
           <UserId>{userId}</UserId>
           <ButtonWrapper>
             <DeleteButton onClick={DeleteOne}>Delete</DeleteButton>
-            <ChangeButton onClick={() => togglingChange(id, title)}>
+            <ChangeButton onClick={() => togglingChange(id, title, userId)}>
               Change
             </ChangeButton>
           </ButtonWrapper>

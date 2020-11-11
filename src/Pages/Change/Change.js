@@ -8,6 +8,8 @@ function Change(props) {
   const {
     changedTitle,
     changedId,
+    changedUserId,
+    changeUserId,
     changeId,
     changeTitle,
     cardModify,
@@ -21,8 +23,8 @@ function Change(props) {
           <InputTitle
             type="text"
             placeholder=" Type Changed title"
-            value={changedId}
-            onChange={changeId}
+            value={changedUserId}
+            onChange={changeUserId}
           />
           <InputTitle
             type="text"
@@ -31,14 +33,18 @@ function Change(props) {
             onChange={changeTitle}
           />
         </InputWrapper>
-        <UploadButton onClick={() => cardModify(changedId, changedTitle)}>
+        <ChangeButton
+          onClick={() => cardModify(changedId, changedTitle, changedUserId)}
+        >
           Change
-        </UploadButton>
+        </ChangeButton>
         <QuitButton onClick={togglingChange}>Quit</QuitButton>
       </UploadWrapper>
     </ChangeContainer>
   );
 }
+
+//changedId 는 인덱스 숫자고 userId를 따로 받아서 수정용으로 사용해야할듯
 
 const ChangeContainer = styled.section`
   position: fixed;
@@ -66,7 +72,7 @@ const InputTitle = styled.input`
   font-size: 1rem;
 `;
 
-const UploadButton = styled.button`
+const ChangeButton = styled.button`
   margin-left: 10px;
   font-size: 1rem;
   &:hover {
