@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Login from "../../Pages/Login/Login";
-import Upload from "../../Pages/Upload/Upload";
 
-import { Link } from "react-router-dom";
-
-function Nav({ togglingUpload }) {
+function Nav({ togglingUpload, togglingLogin, loginStatus }) {
   return (
     <NavContainer>
       <NavWrapper>
         <Logo />
         <div>
-          <LoginText>Login</LoginText>
+          <LoginText onClick={togglingLogin}>
+            {loginStatus ? "Logout" : "Login"}
+          </LoginText>
           <UpLoadText onClick={togglingUpload}>Upload</UpLoadText>
         </div>
       </NavWrapper>
@@ -22,12 +20,11 @@ function Nav({ togglingUpload }) {
 export default Nav;
 
 const NavContainer = styled.nav`
-  justify-content: space-evenly;
-  width: 100vw;
-  height: 82px;
   position: fixed;
   top: 0;
   left: 0;
+  width: 100vw;
+  height: 82px;
   padding: 0 30px;
   background-color: #fff;
 `;
@@ -51,12 +48,16 @@ const Logo = styled.a`
 `;
 
 const LoginText = styled.span`
-  color: #666;
-  font-weight: 600;
   margin-left: 30px;
   line-height: 60px;
+  font-weight: 600;
   font-family: Helvetica, Tahoma, Arial, sans-serif;
+  color: #666;
   cursor: pointer;
+  &:hover {
+    transition: color 0.5s ease-in-out;
+    color: #fe5b60;
+  }
 `;
 
 const UpLoadText = styled(LoginText)`

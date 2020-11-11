@@ -4,6 +4,7 @@ import Button from "../../Components/Button/Button";
 import PhotoCard from "../../Components/PhotoCard/PhotoCard";
 import Upload from "../Upload/Upload";
 import Nav from "../../Components/Nav/Nav";
+import Footer from "../../Components/Footer/Footer";
 import Login from "../Login/Login";
 import Change from "../Change/Change";
 
@@ -16,6 +17,59 @@ export default function Main() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [changedId, setChangedId] = useState(1);
   const [changedTitle, setChangedTitle] = useState("");
+  const [changedUserId, setChangedUserId] = useState(1);
+  const [loginId, setLoginId] = useState("");
+  const [loginPw, setLoginPw] = useState("");
+  const [sampleUserData, setSampleUserData] = useState([]);
+  const [dummyUserData, setDummyUserData] = useState([]);
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [emailValidation, setEmailValidation] = useState(false);
+  const [footerData, setFooterData] = useState([]);
+
+  useEffect(() => {
+    Promise.all([
+      fetch("https://jsonplaceholder.typicode.com/albums"),
+      fetch("/data/data.json"),
+    ])
+      .then(([res1, res2]) => {
+        return Promise.all([res1.json(), res2.json()]);
+      })
+      .then(([res1, res2]) => {
+        setData(res1);
+        setDummyUserData(res2.userdata);
+        setFooterData(res2.footerdata);
+      });
+  }, []);
+
+  const changeLoginStatus = () => {
+    if (localStorage.getItem("token")) {
+      setSampleUserData(JSON.parse(Object(localStorage.getItem("token"))));
+
+      for (let i = 0; dummyUserData.length > i; i++) {
+        for (let j = 0; sampleUserData.length > j; j++) {
+          if (dummyUserData[i].email === sampleUserData[j].email) {
+            setLoginStatus(true);
+          }
+        }
+      }
+    } else {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    changeLoginStatus();
+  }, [dummyUserData]);
+
+  const doLogin = () => {
+    let triedLoginData = [{ email: loginId, pw: loginPw }];
+    setDummyUserData(dummyUserData.concat(triedLoginData));
+    setToggleLogin(!toggleLogin);
+
+    console.log(dummyUserData);
+    localStorage.setItem("token", JSON.stringify(dummyUserData));
+    changeLoginStatus();
+  };
 
   const handleChange = (e) => {
     setNewPostTitle(e.target.value);
@@ -28,34 +82,37 @@ export default function Main() {
   const changeId = (e) => {
     setChangedId(e.target.value);
   };
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/albums ") //url에 limit offset 관련 설정이 없는것으로 추측, [id,userid,title]
-      .then((res) => res.json())
-      .then((res) => setData(res));
-  }, []);
+  const changeUserId = (e) => {
+    setChangedUserId(e.target.value);
+  };
 
   const togglingUpload = () => {
     setToggleUpload(!toggleUpload);
   };
-  const togglingChange = (id, title) => {
-    setToggleChange(!toggleChange);
-    setChangedId(id);
-    setChangedTitle(title);
+
+  const togglingChange = (id, title, userId) => {
+    if (toggleChange === true) {
+      setToggleChange(false);
+    } else if (toggleChange === false) {
+      setToggleChange(true);
+      setChangedId(id);
+      setChangedTitle(title);
+      setChangedUserId(userId);
+    }
   };
 
-  const cardModify = (getId, getTitle) => {
+  const cardModify = (getId, getTitle, getUserId) => {
     let ChangedCardData = data.map((el) =>
       el.id === Number(getId)
         ? {
             ...el,
-            id: getId,
+            userId: getUserId,
             title: getTitle,
           }
         : el
     );
     setData(ChangedCardData);
-    console.log(data);
+    setToggleChange(!toggleChange);
   };
 
   const Pagination = () => {
@@ -89,11 +146,38 @@ export default function Main() {
     togglingUpload();
   };
 
-  const ChangeDetail = (e) => {};
+  const togglingLogin = () => {
+    if (loginStatus === true) {
+      localStorage.removeItem("token");
+      setLoginStatus(false);
+    } else if (loginStatus === false) {
+      setToggleLogin(!toggleLogin);
+    }
+  };
+
+  const saveLoginId = (e) => {
+    let inputValue = e.target.value;
+    console.log(inputValue);
+    setLoginId(inputValue);
+    if (!inputValue.includes("@") && inputValue.length >= 1) {
+      setEmailValidation(true);
+    } else {
+      setEmailValidation(false);
+    }
+    console.log(loginId, loginPw);
+  };
+  const saveLoginPw = (e) => {
+    setLoginPw(e.target.value);
+  };
 
   return (
     <div>
-      <Nav togglingUpload={togglingUpload} />
+      <Nav
+        togglingUpload={togglingUpload}
+        togglingLogin={togglingLogin}
+        sampleUserData={sampleUserData}
+        loginStatus={loginStatus}
+      />
       <MainContainer>
         <BannerImage />
         <ProductContainer>
@@ -104,7 +188,6 @@ export default function Main() {
               userId={userId}
               title={title}
               DeleteOne={() => DeleteOne(id)}
-              ChangeDetail={() => ChangeDetail(id)}
               togglingChange={togglingChange}
             />
           ))}
@@ -113,6 +196,7 @@ export default function Main() {
           <Button text="See More" />
         </ButtonWrapper>
       </MainContainer>
+      <Footer footerData={footerData} />
       <Upload
         toggleUpload={toggleUpload}
         togglingUpload={togglingUpload}
@@ -125,14 +209,24 @@ export default function Main() {
       <Change
         changedId={changedId}
         changedTitle={changedTitle}
-        ChangeDetail={ChangeDetail}
+        changedUserId={changedUserId}
         toggleChange={toggleChange}
         togglingChange={togglingChange}
         changeTitle={changeTitle}
         changeId={changeId}
         cardModify={cardModify}
+        changeUserId={changeUserId}
       />
-      {/* <Login /> */}
+      <Login
+        toggleLogin={toggleLogin}
+        togglingLogin={togglingLogin}
+        loginId={loginId}
+        loginPw={loginPw}
+        saveLoginId={saveLoginId}
+        saveLoginPw={saveLoginPw}
+        doLogin={doLogin}
+        emailValidation={emailValidation}
+      />
     </div>
   );
 }

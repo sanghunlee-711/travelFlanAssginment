@@ -8,7 +8,8 @@ function Change(props) {
   const {
     changedTitle,
     changedId,
-    changeId,
+    changedUserId,
+    changeUserId,
     changeTitle,
     cardModify,
     toggleChange,
@@ -16,29 +17,37 @@ function Change(props) {
   } = props;
   return (
     <ChangeContainer toggleChange={toggleChange}>
-      <UploadWrapper>
+      <ChangeWrapper>
+        <ChangeTitle>Change</ChangeTitle>
         <InputWrapper>
           <InputTitle
             type="text"
-            placeholder=" Type Changed title"
-            value={changedId}
-            onChange={changeId}
+            placeholder=" Type Changed Id"
+            value={changedUserId}
+            onChange={changeUserId}
           />
           <InputTitle
             type="text"
-            placeholder=" Type Changed Id"
+            placeholder=" Type Changed Title"
             value={changedTitle}
             onChange={changeTitle}
           />
         </InputWrapper>
-        <UploadButton onClick={() => cardModify(changedId, changedTitle)}>
-          Change
-        </UploadButton>
+        <ChangeButton
+          onClick={() => cardModify(changedId, changedTitle, changedUserId)}
+        >
+          Change {changedId}th Card
+        </ChangeButton>
         <QuitButton onClick={togglingChange}>Quit</QuitButton>
-      </UploadWrapper>
+      </ChangeWrapper>
     </ChangeContainer>
   );
 }
+
+const ChangeTitle = styled.span`
+  font-size: 24px;
+  line-height: 54px;
+`;
 
 const ChangeContainer = styled.section`
   position: fixed;
@@ -50,7 +59,9 @@ const ChangeContainer = styled.section`
   display: ${(props) => (props.toggleChange ? "static" : "none")};
 `;
 
-const InputWrapper = styled.div``;
+const InputWrapper = styled.div`
+  width: 80%;
+`;
 
 const QuitButton = styled.button`
   position: absolute;
@@ -59,23 +70,32 @@ const QuitButton = styled.button`
 `;
 
 const InputTitle = styled.input`
-  width: 60%;
-  height: 4vh;
   border: 1px solid black;
   border-radius: 0.5em;
   font-size: 1rem;
+  height: 32px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 100%;
+  margin: 5px 0;
 `;
 
-const UploadButton = styled.button`
-  margin-left: 10px;
+const ChangeButton = styled.button`
   font-size: 1rem;
+  width: 80%;
+  height: 40px;
+  margin-top: 5px;
+  margin-bottom: 40px;
+  border: 1px solid black;
+  border-radius: 10px;
   &:hover {
     transition: all 0.5s ease-in-out;
-    color: red;
+    color: white;
+    background-color: black;
   }
 `;
 
-const UploadWrapper = styled.div`
+const ChangeWrapper = styled.div`
   background-color: white;
   position: absolute;
   top: 35vh;
@@ -83,6 +103,7 @@ const UploadWrapper = styled.div`
   width: 30vw;
   height: 30vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
