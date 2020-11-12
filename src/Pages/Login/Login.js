@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
-//fetch와 동시에 로컬스토리지에 token에 저장한다
-// 새로고침 시 로컬스토리지 확인해서 값 있으면 로그인->로그아웃 버튼으로 변경하기
-// 회원가입페이지 하나 빠르게 만들어서 거기에서 타이핑만해서 만들기로 ?
-// 아니면 로그인 진행하고 로컬스토리지에 저장?
+import SubmitButton from "../../Components/Button/SubmitButton";
+import QuitButton from "../../Components/Button/QuitButton";
 
 function Login(props) {
   const {
@@ -23,7 +20,6 @@ function Login(props) {
     <LoginContainer toggleLogin={toggleLogin}>
       <LoginWrapper>
         <LoginText>Login</LoginText>
-        <Divider />
         <EmailInput
           type="text"
           placeholder="Email"
@@ -40,7 +36,14 @@ function Login(props) {
           onChange={saveLoginPw}
         />
 
-        <LoginButton onClick={doLogin}>Login</LoginButton>
+        <SubmitButton
+          onClick={doLogin}
+          disabled={
+            emailValidation || loginId.length <= 5 || loginPw.length <= 5
+          }
+        >
+          Login
+        </SubmitButton>
         <QuitButton onClick={togglingLogin}>Quit</QuitButton>
       </LoginWrapper>
     </LoginContainer>
@@ -61,13 +64,11 @@ const LoginText = styled.span`
   line-height: 54px;
 `;
 const Validation = styled.div`
-  color: red;
-  text-align: left;
+  display: ${(props) => (props.emailValidation ? "static" : "none")};
   width: 80%;
   padding-left: 10px;
-  display: ${(props) => (props.emailValidation ? "static" : "none")};
-
-  /* display: none; */
+  color: red;
+  text-align: left;
 `;
 
 const EmailInput = styled.input`
@@ -83,21 +84,7 @@ const PassWordInput = styled(EmailInput)`
   margin-bottom: 10px;
 `;
 
-const LoginButton = styled.button`
-  width: 80%;
-  height: 40px;
-  margin-bottom: 50px;
-  border: 1px solid black;
-  border-radius: 10px;
-  &:hover {
-    transition: all 0.5s ease-in-out;
-    color: white;
-    background-color: black;
-  }
-`;
-
 const LoginWrapper = styled.div`
-  background-color: white;
   position: absolute;
   top: 35vh;
   left: 35vw;
@@ -108,21 +95,7 @@ const LoginWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 0.5rem;
-`;
-
-const QuitButton = styled.button`
-  position: absolute;
-  right: 1em;
-  top: 1em;
-  &:hover {
-    transition: all 0.5s ease-in-out;
-    color: red;
-  }
-`;
-
-const Divider = styled.div`
-  width: 100%;
-  height: 1px;
+  background-color: white;
 `;
 
 export default Login;

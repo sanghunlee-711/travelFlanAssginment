@@ -35,9 +35,9 @@ export default function Main() {
         return Promise.all([res1.json(), res2.json()]);
       })
       .then(([res1, res2]) => {
-        setData(res1);
-        setDummyUserData(res2.userdata);
-        setFooterData(res2.footerdata);
+        setData((data) => (data = res1));
+        setDummyUserData((dummyUserData) => (dummyUserData = res2.userdata));
+        setFooterData((footerData) => (footerData = res2.footerdata));
       });
   }, []);
 
@@ -48,7 +48,7 @@ export default function Main() {
       for (let i = 0; dummyUserData.length > i; i++) {
         for (let j = 0; sampleUserData.length > j; j++) {
           if (dummyUserData[i].email === sampleUserData[j].email) {
-            setLoginStatus(true);
+            setLoginStatus((loginStatus) => (loginStatus = true));
           }
         }
       }
@@ -61,19 +61,8 @@ export default function Main() {
     changeLoginStatus();
   }, [dummyUserData]);
 
-  const doLogin = () => {
-    let triedLoginData = [{ email: loginId, pw: loginPw }];
-    setDummyUserData(dummyUserData.concat(triedLoginData));
-    setToggleLogin(!toggleLogin);
-
-    console.log(dummyUserData);
-    localStorage.setItem("token", JSON.stringify(dummyUserData));
-    changeLoginStatus();
-  };
-
   const handleChange = (e) => {
     setNewPostTitle(e.target.value);
-    console.log(newPostTitle);
   };
 
   const changeTitle = (e) => {
@@ -87,7 +76,7 @@ export default function Main() {
   };
 
   const togglingUpload = () => {
-    setToggleUpload(!toggleUpload);
+    setToggleUpload((toggleUpload) => !toggleUpload);
   };
 
   const togglingChange = (id, title, userId) => {
@@ -111,12 +100,13 @@ export default function Main() {
           }
         : el
     );
-    setData(ChangedCardData);
-    setToggleChange(!toggleChange);
+
+    setData((data) => (data = ChangedCardData));
+    setToggleChange((toggleChange) => !toggleChange);
   };
 
   const Pagination = () => {
-    setPageCount(pageCount + 5);
+    setPageCount((pageCount) => pageCount + 5);
   };
 
   const uploadNewOne = () => {
@@ -130,7 +120,7 @@ export default function Main() {
     ];
     let pushData = typedData?.concat(data);
     console.log(pushData);
-    setData(pushData);
+    setData(() => pushData);
     AfterType();
   };
 
@@ -138,11 +128,11 @@ export default function Main() {
     let changeData = data.filter((el) => {
       return el.id !== id;
     });
-    setData(changeData);
+    setData(() => changeData);
   };
 
   const AfterType = () => {
-    setNewPostTitle("");
+    setNewPostTitle(() => "");
     togglingUpload();
   };
 
@@ -151,23 +141,33 @@ export default function Main() {
       localStorage.removeItem("token");
       setLoginStatus(false);
     } else if (loginStatus === false) {
-      setToggleLogin(!toggleLogin);
+      setToggleLogin((toggleLogin) => !toggleLogin);
     }
   };
 
   const saveLoginId = (e) => {
     let inputValue = e.target.value;
-    console.log(inputValue);
+
     setLoginId(inputValue);
-    if (!inputValue.includes("@") && inputValue.length >= 1) {
-      setEmailValidation(true);
+    if (!inputValue.includes("@") && inputValue.length > 1) {
+      setEmailValidation(() => true);
     } else {
-      setEmailValidation(false);
+      setEmailValidation(() => false);
     }
-    console.log(loginId, loginPw);
   };
+
   const saveLoginPw = (e) => {
     setLoginPw(e.target.value);
+  };
+
+  const doLogin = () => {
+    let triedLoginData = [{ email: loginId, pw: loginPw }];
+    setDummyUserData(dummyUserData.concat(triedLoginData));
+    setToggleLogin(!toggleLogin);
+
+    console.log(dummyUserData);
+    localStorage.setItem("token", JSON.stringify(dummyUserData));
+    changeLoginStatus();
   };
 
   return (
@@ -178,7 +178,7 @@ export default function Main() {
         sampleUserData={sampleUserData}
         loginStatus={loginStatus}
       />
-      <MainContainer>
+      <main>
         <BannerImage />
         <ProductContainer>
           {data.slice(0, pageCount).map(({ id, userId, title }) => (
@@ -192,10 +192,10 @@ export default function Main() {
             />
           ))}
         </ProductContainer>
-        <ButtonWrapper onClick={Pagination}>
+        <ButtonWrapper onClick={Pagination} pageCount={pageCount} data={data}>
           <Button text="See More" />
         </ButtonWrapper>
-      </MainContainer>
+      </main>
       <Footer footerData={footerData} />
       <Upload
         toggleUpload={toggleUpload}
@@ -231,34 +231,26 @@ export default function Main() {
   );
 }
 
-const MainContainer = styled.main`
-  color: blue;
-`;
-
 const BannerImage = styled.section`
-  background-image: url("https://marketplace.travelflan.com/static/images/banner/default_top_en_US.jpg");
   width: 100vw;
   height: 400px;
-  background-position: 50%;
   margin: 30px 0;
+  background-image: url("https://marketplace.travelflan.com/static/images/banner/default_top_en_US.jpg");
+  background-position: 50%;
 `;
 
 const ButtonWrapper = styled.div`
-  display: flex;
+  display: ${(props) =>
+    props.pageCount >= props.data.length ? "none" : "flex"};
   justify-content: center;
   width: 100vw;
 `;
 
 const ProductContainer = styled.section`
-  width: 100vw;
   display: flex;
-  flex-wrap: wrap;
-  padding: 2em;
   justify-content: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  padding: 2em;
   background-color: #fff;
 `;
-
-// Delete는 PhotoCard id로 filter 메서드 이용해서 -> done
-// Create 는 length + 1 로 id 만들어서 새로 만들기 -> hmm ... done -> id 해결 -> 비동기 문제 어쩌지-> redux버리고 하나로 다 모았다.
-// Update 는 해당 아이디 값 찾아서 그냥 state에 있는 data 수정해버리자
-// Read는 그냥 컴포넌트 띄워주니까 그걸로 퉁 ? -> toong

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import SubmitButton from "../../Components/Button/SubmitButton";
+import QuitButton from "../../Components/Button/QuitButton";
 
 function Upload(props) {
   const {
@@ -20,7 +22,8 @@ function Upload(props) {
           value={newPostTitle}
           onChange={handleChange}
         />
-        <UploadButton onClick={uploadNewOne}>Upload</UploadButton>
+
+        <SubmitButton onClick={uploadNewOne}>Upload</SubmitButton>
         <QuitButton onClick={togglingUpload}>Quit</QuitButton>
       </UploadWrapper>
     </UploadContainer>
@@ -42,52 +45,27 @@ const UploadTitle = styled.span`
   line-height: 54px;
 `;
 
-const QuitButton = styled.button`
-  position: absolute;
-  right: 1em;
-  top: 1em;
-  &:hover {
-    transition: all 0.5s ease-in-out;
-    color: red;
-  }
-`;
-
 const InputTitle = styled.input`
-  height: 32px;
-  border: 1px solid black;
-  border-radius: 10px;
   width: 80%;
+  height: 32px;
   margin: 5px;
   padding-left: 10px;
-  font-size: 1rem;
-`;
-
-const UploadButton = styled.button`
-  font-size: 1rem;
-  width: 80%;
-  height: 40px;
-  margin-bottom: 50px;
   border: 1px solid black;
   border-radius: 10px;
-  &:hover {
-    transition: all 0.5s ease-in-out;
-    color: white;
-    background-color: black;
-  }
+  font-size: 1rem;
 `;
 
 const UploadWrapper = styled.div`
-  background-color: white;
-  position: absolute;
-  top: 35vh;
-  left: 35vw;
-  width: 30vw;
-  height: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  position: absolute;
+  top: 35vh;
+  left: 35vw;
+  width: 30vw;
   border-radius: 0.5rem;
+  background-color: white;
 `;
 
 export default Upload;

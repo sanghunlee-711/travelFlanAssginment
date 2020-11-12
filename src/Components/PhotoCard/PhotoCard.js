@@ -68,7 +68,7 @@ const PhotoId = styled.span`
 `;
 
 const UserId = styled(PhotoId)`
-  margin-left: 10px;
+  /* margin-left: 10px; */
 `;
 
 const PhotoTitle = styled.span`
