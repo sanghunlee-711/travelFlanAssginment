@@ -29,13 +29,13 @@ function Login(props) {
         <Validation emailValidation={emailValidation}>
           Please, type in Email form
         </Validation>
+
         <PassWordInput
           type="password"
           placeholder="Password"
           value={loginPw}
           onChange={saveLoginPw}
         />
-
         <SubmitButton
           onClick={doLogin}
           disabled={
