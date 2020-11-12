@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import { useSelector, useDispatch } from "react-redux";
-import { addOne } from "../../store/actions";
+import SubmitButton from "../../Components/Button/SubmitButton";
+import QuitButton from "../../Components/Button/QuitButton";
 
 function Change(props) {
   const {
@@ -15,6 +14,19 @@ function Change(props) {
     toggleChange,
     togglingChange,
   } = props;
+
+  const ChangeNumberTitle = (changedId) => {
+    if (changedId === 1) {
+      return changedId + "st";
+    } else if (changedId === 2) {
+      return changedId + "nd";
+    } else if (changedId === 3) {
+      return changedId + "rd";
+    } else {
+      return changedId + "th";
+    }
+  };
+
   return (
     <ChangeContainer toggleChange={toggleChange}>
       <ChangeWrapper>
@@ -33,11 +45,11 @@ function Change(props) {
             onChange={changeTitle}
           />
         </InputWrapper>
-        <ChangeButton
+        <SubmitButton
           onClick={() => cardModify(changedId, changedTitle, changedUserId)}
         >
-          Change {changedId}th Card
-        </ChangeButton>
+          Change {ChangeNumberTitle(changedId)} Card
+        </SubmitButton>
         <QuitButton onClick={togglingChange}>Quit</QuitButton>
       </ChangeWrapper>
     </ChangeContainer>
@@ -63,13 +75,8 @@ const InputWrapper = styled.div`
   width: 80%;
 `;
 
-const QuitButton = styled.button`
-  position: absolute;
-  right: 1em;
-  top: 1em;
-`;
-
 const InputTitle = styled.input`
+  padding: 0 5px;
   border: 1px solid black;
   border-radius: 0.5em;
   font-size: 1rem;
@@ -78,21 +85,6 @@ const InputTitle = styled.input`
   border-radius: 10px;
   width: 100%;
   margin: 5px 0;
-`;
-
-const ChangeButton = styled.button`
-  font-size: 1rem;
-  width: 80%;
-  height: 40px;
-  margin-top: 5px;
-  margin-bottom: 40px;
-  border: 1px solid black;
-  border-radius: 10px;
-  &:hover {
-    transition: all 0.5s ease-in-out;
-    color: white;
-    background-color: black;
-  }
 `;
 
 const ChangeWrapper = styled.div`

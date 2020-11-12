@@ -7,18 +7,16 @@ function Button(props) {
 }
 
 const ButtonContainer = styled.button`
-  top: 160px;
   width: 260px;
   height: 65px;
-  line-height: 65px;
-  font-size: 26px;
-  left: 50%;
-  border-radius: 12px;
-  background: #e1e1e1;
   text-align: center;
   color: white;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  background: #e1e1e1;
+
   cursor: pointer;
-  transition: all 0.5 ease-in-out;
+  transition: all 0.5s ease-in-out;
   &:hover {
     color: #e1e1e1;
     background: #fff;

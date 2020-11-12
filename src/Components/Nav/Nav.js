@@ -45,6 +45,7 @@ const Logo = styled.a`
   background: url("https://marketplace.travelflan.com/img/logo2.f43e83b3.png")
     50% no-repeat;
   background-size: 100%;
+  cursor: pointer;
 `;
 
 const LoginText = styled.span`

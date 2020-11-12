@@ -3,12 +3,6 @@ import styled from "styled-components";
 
 export default function Footer(props) {
   const { footerData } = props;
-  useEffect(() => {
-    window.addEventListener("click", testFunc);
-  });
-  const testFunc = () => {
-    console.log(footerData);
-  };
 
   return (
     <FooterContainer>
@@ -17,7 +11,7 @@ export default function Footer(props) {
           <LinkWrapper>
             <FooterTitle>Link About Me</FooterTitle>
             {footerData?.map(({ title, imgsrc, linksrc }) => (
-              <li>
+              <li key={title}>
                 <NotionLink href={linksrc}>
                   <span>{title}</span>
                   <img alt="notion portfolio" src={imgsrc} />
