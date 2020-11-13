@@ -57,8 +57,7 @@ function Change(props) {
 }
 
 const ChangeTitle = styled.span`
-  font-size: 24px;
-  line-height: 54px;
+  ${(props) => props.theme.ModalTitle()}
 `;
 
 const ChangeContainer = styled.section`
@@ -76,29 +75,19 @@ const InputWrapper = styled.div`
 `;
 
 const InputTitle = styled.input`
+  width: 100%;
+  height: 32px;
   padding: 0 5px;
+  margin: 5px 0;
   border: 1px solid black;
   border-radius: 0.5em;
   font-size: 1rem;
-  height: 32px;
   border: 1px solid black;
   border-radius: 10px;
-  width: 100%;
-  margin: 5px 0;
 `;
 
 const ChangeWrapper = styled.div`
-  background-color: white;
-  position: absolute;
-  top: 35vh;
-  left: 35vw;
-  width: 30vw;
-  height: 30vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.5rem;
+  ${(props) => props.theme.ModalWrapper()}
 `;
 
 export default Change;

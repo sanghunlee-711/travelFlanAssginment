@@ -8,7 +8,7 @@ import Footer from "../../Components/Footer/Footer";
 import Login from "../Login/Login";
 import Change from "../Change/Change";
 
-export default function Main() {
+function Main() {
   const [data, setData] = useState([]);
   const [pageCount, setPageCount] = useState(5);
   const [toggleLogin, setToggleLogin] = useState(false);
@@ -235,9 +235,16 @@ export default function Main() {
 const BannerImage = styled.section`
   width: 100vw;
   height: 400px;
-  margin: 30px 0;
+  margin: 82px 0 30px 0;
   background-image: url("https://marketplace.travelflan.com/static/images/banner/default_top_en_US.jpg");
   background-position: 50%;
+
+  @media only screen and (max-width: 1000px) {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: 50% 30%;
+    background-size: 220vw 60vh;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -254,4 +261,9 @@ const ProductContainer = styled.section`
   width: 100vw;
   padding: 2em;
   background-color: #fff;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
+export default Main;
