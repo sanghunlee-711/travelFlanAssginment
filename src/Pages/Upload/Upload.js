@@ -66,6 +66,12 @@ const UploadWrapper = styled.div`
   width: 30vw;
   border-radius: 0.5rem;
   background-color: white;
+  @media only screen and (max-width: 1000px) {
+    top: 82px;
+    left: 0;
+    width: 100vw;
+    height: 30vh;
+  }
 `;
 
 export default Upload;

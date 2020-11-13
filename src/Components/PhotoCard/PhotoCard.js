@@ -36,6 +36,11 @@ const PhotoCardContainer = styled.div`
   }
   width: calc(100vw / 6);
   margin: 10px;
+
+  @media only screen and (max-width: 1000px) {
+    width: 80vw;
+    margin: 3vh 0;
+  }
 `;
 const TextWrapper = styled.div`
   width: 100%;

@@ -99,6 +99,12 @@ const ChangeWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
+  @media only screen and (max-width: 1000px) {
+    top: 82px;
+    left: 0;
+    width: 100vw;
+    height: 30vh;
+  }
 `;
 
 export default Change;
