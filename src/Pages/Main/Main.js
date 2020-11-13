@@ -226,6 +226,7 @@ export default function Main() {
         saveLoginPw={saveLoginPw}
         doLogin={doLogin}
         emailValidation={emailValidation}
+        dummyUserData={dummyUserData}
       />
     </div>
   );
