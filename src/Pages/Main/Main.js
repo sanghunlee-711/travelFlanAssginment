@@ -8,7 +8,7 @@ import Footer from "../../Components/Footer/Footer";
 import Login from "../Login/Login";
 import Change from "../Change/Change";
 
-export default function Main() {
+function Main() {
   const [data, setData] = useState([]);
   const [pageCount, setPageCount] = useState(5);
   const [toggleLogin, setToggleLogin] = useState(false);
@@ -261,8 +261,9 @@ const ProductContainer = styled.section`
   width: 100vw;
   padding: 2em;
   background-color: #fff;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1000px) {
     flex-direction: column;
     align-items: center;
   }
 `;
+export default Main;

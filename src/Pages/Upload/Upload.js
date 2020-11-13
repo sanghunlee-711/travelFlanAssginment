@@ -31,47 +31,20 @@ function Upload(props) {
 }
 
 const UploadContainer = styled.section`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(217, 188, 186, 0.25);
+  ${(props) => props.theme.ModalContainer()}
   display: ${(props) => (props.toggleUpload ? "static" : "none")};
 `;
 
+const UploadWrapper = styled.div`
+  ${(props) => props.theme.ModalWrapper()}
+`;
+
 const UploadTitle = styled.span`
-  font-size: 24px;
-  line-height: 54px;
+  ${(props) => props.theme.ModalTitle()}
 `;
 
 const InputTitle = styled.input`
-  width: 80%;
-  height: 32px;
-  margin: 5px;
-  padding-left: 10px;
-  border: 1px solid black;
-  border-radius: 10px;
-  font-size: 1rem;
-`;
-
-const UploadWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  position: absolute;
-  top: 35vh;
-  left: 35vw;
-  width: 30vw;
-  border-radius: 0.5rem;
-  background-color: white;
-  @media only screen and (max-width: 1000px) {
-    top: 82px;
-    left: 0;
-    width: 100vw;
-    height: 30vh;
-  }
+  ${(props) => props.theme.ModalInput()}
 `;
 
 export default Upload;

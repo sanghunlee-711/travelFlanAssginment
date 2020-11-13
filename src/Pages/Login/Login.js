@@ -19,7 +19,7 @@ function Login(props) {
   return (
     <LoginContainer toggleLogin={toggleLogin}>
       <LoginWrapper>
-        <LoginText>Login</LoginText>
+        <LoginTitle>Login</LoginTitle>
         <EmailInput
           type="text"
           placeholder="Email"
@@ -51,57 +51,31 @@ function Login(props) {
 }
 
 const LoginContainer = styled.section`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(217, 188, 186, 0.25);
+  ${(props) => props.theme.ModalContainer()}
   display: ${(props) => (props.toggleLogin ? "static" : "none")};
 `;
-const LoginText = styled.span`
-  font-size: 24px;
-  line-height: 54px;
+
+const LoginWrapper = styled.div`
+  ${(props) => props.theme.ModalWrapper()}
 `;
-const Validation = styled.div`
-  display: ${(props) => (props.emailValidation ? "static" : "none")};
-  width: 80%;
-  padding-left: 10px;
-  color: red;
-  text-align: left;
+const LoginTitle = styled.span`
+  ${(props) => props.theme.ModalTitle()}
 `;
 
 const EmailInput = styled.input`
-  height: 32px;
-  border: 1px solid black;
-  border-radius: 10px;
-  width: 80%;
-  margin: 5px;
-  padding-left: 10px;
+  ${(props) => props.theme.ModalInput()}
 `;
 
 const PassWordInput = styled(EmailInput)`
   margin-bottom: 10px;
 `;
 
-const LoginWrapper = styled.div`
-  position: absolute;
-  top: 35vh;
-  left: 35vw;
-  width: 560px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 0.5rem;
-  background-color: white;
-  @media only screen and (max-width: 1000px) {
-    top: 82px;
-    left: 0;
-    width: 100vw;
-    height: 30vh;
-  }
+const Validation = styled.div`
+  display: ${(props) => (props.emailValidation ? "static" : "none")};
+  width: 80%;
+  padding-left: 10px;
+  color: red;
+  text-align: left;
 `;
 
 export default Login;
