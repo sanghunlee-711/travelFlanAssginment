@@ -9,8 +9,7 @@ import { createStore } from "redux";
 import rootReducer from "./store/reducers";
 
 const store = createStore(rootReducer);
-//reducer는 sotre를 업데이트시키는 함수이다 그러니 두개 연결이 필요
-//provider는 컴포넌트와 스토어의 연결을 위함
+
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider key={theme} theme={theme}>
